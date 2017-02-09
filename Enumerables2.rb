@@ -102,14 +102,23 @@ end
 # repeated_number_ranges([1, 1, 2]) => [[0, 1]]
 # repeated_number_ranges([1, 2, 3, 3, 4, 4, 4]) => [[2, 3], [4, 6]]
 def repeated_number_ranges(arr)
-  result = []
-  size = arr.count
-  head = 0
+  result = [] # array of repeated_number_ranges
+  size = arr.count # size of the input arr
+  head = 0 # head of the range
+  tail = -1 # tail of the range
 
   (head+1..size-1).each do |i|
-    if(arr[i] != arr[head])
-      result << [head, i]
-      head = i+1
+    
+    head = i if arr[i] != arr[head] && i-head == 1 # update head if no repeated number
+    
+    if arr[i] == arr[head] # update tail until no more repeated numbers
+      tail = i
+      next # break and go to next iteration
+    end
+    
+    if tail > head # append the range of head and tail to the result when it is determined
+      result << [head,tail]
+      head = i+1 # update head of the range
     end
   end
   
