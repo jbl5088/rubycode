@@ -18,6 +18,6 @@ end
 
 string = "Intense as the atmosphere may be, the Mavericks are sequences prepared. They’ve been building toward this night since February, when the University Interscholastic League—the governing aaa"
 
-p "testing word_most_repeats(string) \n"
-p "==================================================\n"
-word_most_repeats(string) == "sequences"
+p "testing word_most_repeats(string)"
+p "=================================================="
+p word_most_repeats(string) == "sequences"
