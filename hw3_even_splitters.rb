@@ -17,9 +17,9 @@
 # ------------------------------------------------------------------------------
 
 def even_splitters(string)
-  result = []   # define a result array
+  result = []   
   
-  uniq_chars = string.chars.uniq # define a unique chars array
+  uniq_chars = string.chars.uniq 
   
   uniq_chars.each do |c|
     result << c if element_same_length?(string.split(c))
