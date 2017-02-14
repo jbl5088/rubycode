@@ -18,21 +18,16 @@
 
 def even_splitters(string)
   result = []   
-  
-  uniq_chars = string.chars.uniq 
-  
-  uniq_chars.each do |c|
+
+  string.chars.uniq.each do |c|
     result << c if element_same_length?(string.split(c))
   end
   
-  result
+  p result
 end
 
 def element_same_length?(elements)
- 
-  return true if elements.empty?
-  
-  len = elements.max.length
+  elements.empty? ? len = 0 : len = elements.max.length
   elements.each do |el|
     next if el.length < 1
     return false if len != el.length
