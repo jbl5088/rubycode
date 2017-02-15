@@ -72,7 +72,7 @@ end
 def xbonacci(starting_sequence, number_of_xbonacci_numbers_to_return)
   xbonacci_nums = starting_sequence      # array of xbonacci_nums 
   size_nums = starting_sequence.count    # 
-  nums = Array.new(size_nums,1)          # copy of starting sequence of numbers 
+  nums = Array.new(size_nums,1)          # copy of starting sequence of numbers, initial 1
   
   
   index_nums = 0

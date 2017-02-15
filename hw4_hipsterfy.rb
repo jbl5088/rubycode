@@ -20,7 +20,7 @@ def remove_last_vowel(word)
   num_vowel = 0
   
   word.reverse.chars.each do |c|
-    num_vowel += 1 if is_vowel?(c)
+    num_vowel += 1 if is_vowel?(c) # "aeiou".include?(c)
     next if is_vowel?(c) && num_vowel == 1
     new_word += c
   end
