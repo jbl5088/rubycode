@@ -1,25 +1,5 @@
-# Instructions
-# Make sure everything puts out as 'true' when you run the file.
-# When time is up, make sure you don't have any unexpected `end`s or infinite loops
-# that would keep your code from running.
-# Rename the file to be your firstname and lastname.
-#
-# Do not use the internet.  Do not reference the exercises.  If you forget a
-# particular ruby method, write it yourself.
-#
-# Do not change the parameters passed into the functions in this file.
-#
-# Test your code with a few cases in addition to the ones we give
-# you.
-#
-# Write as many helper methods as you need!
-#
-# Good luck!
-
-
-
 # Long Word Count
-
+# ------------------------------------------------------------------------------
 # Return the number of words longer than 7 characters
 # "cat cactus balderdash phenomenon amazon" has two words over 7 characters long
 # "balderdash" and "phenomenon"
@@ -65,11 +45,11 @@ def calculate(starting_value, operations)
     operations.each do |op|
         if op[0] == '+'
             result += op[1]
-            elsif op[0] == '-'
+        elsif op[0] == '-'
             result -= op[1]
-            elsif op[0] == '*'
+        elsif op[0] == '*'
             result *= op[1]
-            elsif op[0] == '/'
+        elsif op[0] == '/'
             result /= op[1]
         end
     end
@@ -95,12 +75,10 @@ def hashtagify(sentence, tags)
     sentence.split.each do |word|
         tags?(word, tags) ? new_sentence << '#' + word + ' ' : new_sentence += word + ' '
     end
-    
     new_sentence[0..new_sentence.length-2]
 end
 
 def tags?(word, tags)
-    
     tags.each do |tag|
         return true if word.downcase.include?(tag)
     end
@@ -137,19 +115,14 @@ def vigenere_cipher(string, key_sequence)
     alphabet = ("a".."z").to_a
     new_str = ""
     key_cnt = 0
-    
     string.chars.each do |c|
         new_key = key_sequence.first + alphabet.index(c)
         new_str += alphabet[new_key%26]
         key_sequence.push(key_sequence.first)
         key_sequence.shift
-    end
-    
+    end   
     new_str
 end
-
-
-# def update_key(index)
 
 puts "----Vigenere cipher----"
 puts vigenere_cipher("toerrishuman", [1]) == "upfssjtivnbo"
