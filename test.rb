@@ -1,146 +1,282 @@
-# Instructions
+# EASY
 
-# Make sure everything puts out as 'true' when you run the file.
-# When time is up, make sure you don't have any unexpected `end`s or infinite loops
-# that would keep your code from running.
-# Rename the file to be your firstname and lastname.
-#
-# Do not use the internet.  Do not reference the exercises.  If you forget a
-# particular ruby method, write it yourself.
-#
-# Do not change the parameters passed into the functions in this file.
-#
-# Test your code with a few cases in addition to the ones we give
-# you.
-#
-# Write as many helper methods as you need!
-#
-# Good luck!
-
-
-
-# Long Word Count
-
-# Return the number of words longer than 7 characters
-# "cat cactus balderdash phenomenon amazon" has two words over 7 characters long
-# "balderdash" and "phenomenon"
-# long_word_count("cat cactus balderdash phenomenon amazon") => 2
-
-def long_word_count(text)
-  text.split.select {|word| word.length > 7}.count
+# Define a method that, given a sentence, returns a hash of each of the words as keys with their lengths as values. Assume the argument lacks punctuation.
+def word_lengths(str)
+  words = str.split
+  words_hash = {}
+  words.each do |word|
+    words_hash[word] = word.length
+  end
+  words_hash
 end
 
-puts "-------Long Word Count-------"
-puts long_word_count("") == 0
-puts long_word_count("short words only") == 0
-puts long_word_count("one reallylong word") == 1
-puts long_word_count("two reallylong words inthisstring") == 2
-
-
-
-# Calculate
-
-# Define a method, #calculate, that accepts two arguments: a starting value and an
-# array of commands. The method should preform the specified commands and return the
-# final value. An example of commands might look like:
-
-# [["+", 3], ["/",4 ], ['-', 10], ["*", 6]]
-
-# Note that this is an array of arrays, where the first element is the operation to perform,
-# and the second argument is the value to use in the operation. You only need to account
-# for the 4 basic operations: +, -, *, and /
-
-# ex: calculate(3, [["*", 5]]) ==> 3 * 5 == 15
-# ex: calculate(2, [["+", 2], ["/",4 ]]) ==> (2 + 2) / 4 == 1
-
-def calculate(starting_value, operations)
-  sum = starting_value
-  operations.each do |ops|
-    operator = ops[0]
-    operand = ops[1]
-    
-    case operator
-      when '+'
-        sum += operand 
-      when '-'
-        sum -= operand
-      when '*'
-        sum *= operand
-      when '/'
-        sum /=operand
-      else 
-    end
-  end  
-  sum    
-end
-
-
-puts "-------Calculate-------"
-puts calculate(3, [["*", 5]]) == 15
-puts calculate(2, [["+", 2], ["/",4 ]]) == 1
-puts calculate(0, [["+", 3], ["/", 3], ['-', 10], ["*", 6]]) == -54
-puts calculate(10, [["+", 1], ["+", 10], ['-', 3], ["/", 2]]) == 9
-
-
-
-# Hashtagify
-
-# Given a sentence string and an array of words, hashtag-ify the words (case-insensitive)
-# in the original string and return the updated cool string with hashtags.
-
-def hashtagify(sentence, tags)
-  words = sentence.split
-  words.map! do |word|
-    if tags.any? {|tag| word.downcase.include?(tag)}
-      '#' + word
-    else
-      word
+# Define a method that, given a hash with integers as values, returns the key with the largest value.
+def greatest_key_by_val(hash)
+  largest_value = 0
+  largest_key = ""
+  hash.each do |k, v|
+    if v > largest_value
+      largest_value = v
+      largest_key = k
     end
   end
-  words.join(' ')
+  largest_key
 end
 
-puts "-------Hashtagify-------"
-puts hashtagify("coding", ["coding"]) == "#coding"
-puts hashtagify("coding is fun", ["coding", "fun"]) == "#coding is #fun"
-puts hashtagify("Learned about coding. Coding is fun!", ["coding", "fun"]) == "Learned about #coding. #Coding is #fun!"
-
-
-
-# Vigenere Cipher
-
-# Vigenere's Cipher is a tool for encrypting strings. We'll offset each character
-# according to a key sequence. For example, if we encrypt "bananasinpajamas" with the
-# key sequence [1, 2, 3], the result would be "ccqbpdtkqqcmbodt":
-#
-# Word:   b a n a n a s i n p a j a m a s
-# Keys:   1 2 3 1 2 3 1 2 3 1 2 3 1 2 3 1
-# Cipher: c c q b p d t k q q c m b o d t
-#
-# Note that offsets should wrap around the alphabet - offsetting 'z' by 1 should
-# produce 'a'
-
-# Write a method that takes a string and a key-sequence, returning
-# the encrypted word. Assume only lower-case letters are used.
-
-# We're giving you the alphabet as an array if you need it.
-
-
-def vigenere_cipher(string, key_sequence)
-  alphabet = ('a'..'z').to_a
-  keys = key_sequence.dup
-  result = ""
-  while result.length < string.length
-    c = string[result.length] 
-    offset = (alphabet.index(c) + keys.first) % 26 
-    result += alphabet[offset]
-    keys.push(keys.shift)
+# Define a method that accepts two hashes as arguments: an older inventory and a newer one. The method should update keys in the older inventory with values from the newer one as well as add new key-value pairs to the older inventory. The method should return the older inventory as a result.
+# march = {rubies: 10, emeralds: 14, diamonds: 2}
+# april = {emeralds: 27, moonstones: 5}
+# update_inventory(march, april) => {rubies: 10, emeralds: 27, diamonds: 2, moonstones: 5}
+def update_inventory(older, newer)
+  result = older.dup
+  newer.each do |new_k, new_v|
+    result[new_k] = new_v   
   end
   result
 end
 
-puts "----Vigenere cipher----"
-puts vigenere_cipher("toerrishuman", [1]) == "upfssjtivnbo"
-puts vigenere_cipher("toerrishuman", [1, 2]) == "uqftsktjvobp"
-puts vigenere_cipher("toarrispirate", [1, 2, 3, 4]) == "uqdvskvtjtdxf"
-puts vigenere_cipher("zzz", [1, 2, 1]) === "aba"
+# Define a method that, given a word, returns a hash with the letters in the word as keys and the frequencies of the letters as values.  the counts of each letter
+def letter_counts(word)
+  letters_hash = Hash.new(0)
+  word.chars.each do |letter|
+    letters_hash[letter] += 1
+  end
+  letters_hash
+end
+
+
+# MEDIUM
+
+# Define a method that, given an array, returns its argument without duplicates. Use a hash! Don't use the uniq method.
+def uniq(arr)
+  hash = {}
+  arr.each do |el|
+    hash[el] = el
+  end
+  result = []
+  hash.each do |k, v|
+    result << v
+  end
+  result
+end
+
+# Define a method that, given an array of numbers, returns a hash with "even" and "odd" as keys and the frequency of each parity as values.
+def evens_and_odds(numbers)
+  hash = {'even' => 0, 'odd' => 0}
+  numbers.each do |num|
+    hash['even'] += 1 if num.even?
+    hash['odd'] += 1 if num.odd?
+  end
+  hash
+end
+
+# Define a method that, given a string, returns the most common vowel. If there's a tie, return the vowel that occurs earlier in the alphabet. 
+# Assume all letters are lower case.
+def most_common_vowel(string)
+  # most_common_vowel = Hash.new(0)
+  # vowel = "aeiou"
+  # chars = string.downcase.chars
+
+  # chars.each do |c|
+  #   most_common_vowel[c] = string.count(c) if vowel.include?(c)
+  # end
+  # most_common_vowel.sort.each do |k, v|
+end
+
+
+
+# HARD
+
+# Define a method that, given a hash with keys as student names and values as their birthday months (numerically, e.g., 1 corresponds to January), returns every combination of students whose birthdays fall in the second half of the year (months 7-12).
+# students_with_birthdays = {
+#   "Asher" => 6,
+#   "Bertie" => 11,
+#   "Dottie" => 8,
+#   "Warren" => 9
+# }
+# fall_and_winter_birthdays(students_with_birthdays) => [
+#   ["Bertie", "Dottie"],
+#   ["Bertie", "Warren"],
+#   ["Dottie", "Warren"]
+# ]
+def fall_and_winter_birthdays(students_with_birthdays)
+  w
+end
+
+# Define a method that, given an array of specimens, returns the biodiversity index as defined by the following formula:
+# number_of_species**2 * smallest_population_size / largest_population_size
+# biodiversity_index(["cat", "cat", "cat"]) => 1
+# biodiversity_index(["cat", "leopard-spotted ferret", "dog"]) => 9
+def biodiversity_index(specimens)
+
+end
+
+# Define a method that, given the string of a respectable business sign, returns a boolean indicating whether pranksters can make a given vandalized string using the available letters. Ignore capitalization and punctuation.
+# can_tweak_sign("We're having a yellow ferret sale for a good cause over at the pet shop!", "Leopard ferrets forever yo") => true
+def can_tweak_sign?(normal_sign, vandalized_sign)
+
+end
+
+def character_count(str)
+
+end
+
+$success_count = 0
+$failure_count = 0
+
+def deep_dup(arr)
+  arr.inject([]) { |acc, el| el.is_a?(Array) ? acc << deep_dup(el) : acc << el }
+end
+
+def note_success(returned, invocation, expectation)
+  puts "success: #{invocation} => #{expectation}"
+  $success_count += 1
+end
+
+def note_failure(returned, invocation, expectation)
+  puts "failure: #{invocation}: expected #{expectation}, returned #{returned}"
+  $failure_count += 1
+end
+
+def format_args(args)
+  o_args = deep_dup(args)
+  o_args.map! do |arg|
+    arg = prettify(arg)
+    arg.class == Array ? arg.to_s : arg
+  end
+  o_args.join(', ')
+end
+
+def prettify(statement)
+  case statement
+  when Float
+    statement.round(5)
+  when String
+    "\"#{statement}\""
+  when NilClass
+    "nil"
+  else
+    statement
+  end
+end
+
+def equality_test(returned, invocation, expectation)
+  if returned == expectation && returned.class == expectation.class
+    note_success(returned, invocation, expectation)
+  else
+    note_failure(returned, invocation, expectation)
+  end
+end
+
+def identity_test(returned, invocation, expectation, args)
+  if returned.__id__ == args[0].__id__
+    equality_test(returned, invocation, expectation)
+  else
+    puts "failure: #{invocation}: You did not mutate the original array!"
+    $failure_count += 1
+  end
+end
+
+def method_missing(method_name, *args)
+  method_name = method_name.to_s
+  expectation = args[-1]
+  args = args[0...-1]
+  if method_name.start_with?("test_")
+    tested_method = method_name[5..-1]
+    print_test(tested_method, args, expectation)
+  else
+    method_name = method_name.to_sym
+    super
+  end
+end
+
+def print_test(method_name, args, expectation)
+  returned = self.send(method_name, *args)
+  returned = prettify(returned)
+  expectation = prettify(expectation)
+  args_statement = format_args(args)
+  invocation = "#{method_name}(#{args_statement})"
+  method_name.include?("!") ? identity_test(returned, invocation, expectation, args) : equality_test(returned, invocation, expectation)
+  rescue Exception => e
+    puts "failure: #{invocation} threw #{e}"
+    puts e.backtrace.select {|t| !t.include?("method_missing") && !t.include?("print_test")}
+    $failure_count += 1
+end
+
+inferno = "Nel mezzo del cammin di nostra vita mi ritrovai per una selva oscura"
+catullus_v = "Vivamus mea Lesbia atque amemus"
+march = {rubies: 10, emeralds: 14, diamonds: 2}
+april = {emeralds: 27, moonstones: 5}
+pallet_town = {pokeball: 1, potion: 2}
+elite_four = {pokeball: 25, hyper_potion: 52}
+students_with_birthdays_1 = {
+  "Asher" => 6,
+  "Bertie" => 11,
+  "Dottie" => 8,
+  "Warren" => 9
+}
+
+second_half_birthday_pairs_1 = [
+  ["Bertie", "Dottie"],
+  ["Bertie", "Warren"],
+  ["Dottie", "Warren"]
+]
+
+students_with_birthdays_2 = {
+  "Asher" => 6,
+  "Bertie" => 11,
+  "Dottie" => 8,
+  "Warren" => 9,
+  "Charlie" => 7,
+  "Nassim" => 4,
+  "Ajit" => 10,
+}
+
+second_half_birthday_pairs_2 = [
+  ["Bertie", "Dottie"],
+  ["Bertie", "Warren"],
+  ["Bertie", "Charlie"],
+  ["Bertie", "Ajit"],
+  ["Dottie", "Warren"],
+  ["Dottie", "Charlie"],
+  ["Dottie", "Ajit"],
+  ["Warren", "Charlie"],
+  ["Warren", "Ajit"],
+  ["Charlie", "Ajit"],
+]
+
+puts "\wword_lengths:\n" + "*" * 15 + "\n"
+test_word_lengths(inferno, {"Nel"=>3, "mezzo"=>5, "del"=>3, "cammin"=>6, "di"=>2, "nostra"=>6, "vita"=>4, "mi"=>2, "ritrovai"=>8, "per"=>3, "una"=>3, "selva"=>5, "oscura"=>6})
+test_word_lengths(catullus_v, {"Vivamus"=>7, "mea"=>3, "Lesbia"=>6, "atque"=>5, "amemus"=>6})
+puts "\wgreatest_key_by_val:\n" + "*" * 15 + "\n"
+test_greatest_key_by_val({a: 100, b: 1, c: 50}, :a)
+test_greatest_key_by_val({a: 1, b: 100, c: 50}, :b)
+puts "\wupdate_inventory:\n" + "*" * 15 + "\n"
+test_update_inventory(march, april, {rubies: 10, emeralds: 27, diamonds: 2, moonstones: 5})
+test_update_inventory(pallet_town, elite_four, {pokeball: 25, potion: 2, hyper_potion: 52})
+puts "\wletter_counts:\n" + "*" * 15 + "\n"
+test_letter_counts("hi", { 'h' => 1, 'i' => 1 })
+test_letter_counts("hello", { 'h' => 1, 'e' => 1 , 'l' => 2, 'o' => 1})
+puts "\wuniq:\n" + "*" * 15 + "\n"
+test_uniq([1,1,2,2,3], [1,2,3])
+test_uniq([1,1,1], [1])
+puts "\wevens_and_odds:\n" + "*" * 15 + "\n"
+test_evens_and_odds([1,2,3], {"even" => 1, "odd" => 2})
+test_evens_and_odds([0,2], {"even" => 2, "odd" => 0})
+puts "\wmost_common_vowel:\n" + "*" * 15 + "\n"
+test_most_common_vowel(catullus_v, "a")
+test_most_common_vowel("eeaa", "a")
+puts "\wfall_and_winter_birthdays:\n" + "*" * 15 + "\n"
+test_fall_and_winter_birthdays(students_with_birthdays_1, second_half_birthday_pairs_1)
+test_fall_and_winter_birthdays(students_with_birthdays_2, second_half_birthday_pairs_2)
+puts "\wbiodiversity_index:\n" + "*" * 15 + "\n"
+test_biodiversity_index(["cat", "cat", "cat"], 1)
+test_biodiversity_index(["cat", "leopard-spotted ferret", "dog"], 9)
+puts "\wcan_tweak_sign?:\n" + "*" * 15 + "\n"
+test_can_tweak_sign?("We're having a yellow ferret sale for a good cause over at the pet shop!", "Leopard ferrets forever yo", true)
+test_can_tweak_sign?("Get on down to real fake doors", "None of them open!", false)
+puts
+puts "TOTAL CORRECT: #{$success_count} / #{$success_count + $failure_count}"
+puts "TOTAL FAILURES: #{$failure_count}"
+$success_count = 0
+$failure_count = 0
